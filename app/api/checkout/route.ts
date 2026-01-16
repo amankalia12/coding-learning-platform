@@ -36,9 +36,6 @@ export async function POST(req: Request) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
-  }
   try {
     const session = await stripe.checkout.sessions.create({
 
@@ -48,15 +45,16 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'usd',
             product_data: { name: 'Pro Access' },
-            unit_amount: 2000,
+            unit_amount: 9900, // $99.00
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      // ✅ SAFE: user.id is now guaranteed to be a string
+      // ✅ Include user ID if authenticated, otherwise null
       metadata: {
-        supabaseUserId: user.id,
+        supabaseUserId: user?.id || null,
+        email: user?.email || null,
       },
       success_url: `${req.headers.get('origin')}/success`,
       cancel_url: `${req.headers.get('origin')}/pricing`,
