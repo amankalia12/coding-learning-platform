@@ -1,5 +1,10 @@
 import Hero from '@/components/home/Hero';
+import Stats from '@/components/home/Stats';
+import Features from '@/components/home/Features';
+import LearningPaths from '@/components/home/LearningPaths';
 import CourseGrid from '@/components/home/CourseGrid';
+import Testimonials from '@/components/home/Testimonials';
+import CTA from '@/components/home/CTA';
 import Navbar from '@/components/layout/Navbar';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -22,14 +27,19 @@ export default async function HomePage() {
     );
   }
 
+  const firstCourse = courses && courses.length > 0 ? courses[0] : null;
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <Navbar />
-      <main className="max-w-7xl mx-auto pb-20">
-        <Hero />
-
-        {/* Course Grid */}
+      <main className="max-w-7xl mx-auto">
+        <Hero firstCourse={firstCourse} />
+        <Stats />
+        <Features />
+        <LearningPaths />
         <CourseGrid courses={courses || []} />
+        <Testimonials />
+        <CTA />
       </main>
     </div>
   );

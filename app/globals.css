@@ -1,43 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  /* Professional Adult Learning Palette - 60-30-10 Rule */
-  --background: #F9F9F9;
-  /* Primary Background (60%) - Soft Off-White */
-  --foreground: #292940;
-  /* Text Color - Charcoal for maximum readability */
+  /* Fun & Vibrant Learning Palette - Professional yet Engaging */
+  --background: #F8FAFC;
+  /* Primary Background - Light blue-gray, more vibrant than white */
+  --foreground: #1E293B;
+  /* Text Color - Deep slate for strong contrast */
 
   --card: #FFFFFF;
-  /* Card Background - Clean white for content areas */
-  --card-foreground: #292940;
+  /* Card Background - Clean white with subtle warmth */
+  --card-foreground: #1E293B;
 
   --popover: #FFFFFF;
-  --popover-foreground: #292940;
+  --popover-foreground: #1E293B;
 
-  --primary: #005F73;
-  /* Secondary Color (30%) - Deep Teal Blue */
+  --primary: #3B82F6;
+  /* Primary Color - Vibrant Blue, engaging and trustworthy */
   --primary-foreground: #FFFFFF;
 
-  --secondary: #666666;
-  /* Muted Text - Gray for secondary information */
+  --secondary: #6366F1;
+  /* Secondary Color - Indigo, professional yet vibrant */
   --secondary-foreground: #FFFFFF;
 
-  --muted: #F0F0F0;
-  --muted-foreground: #666666;
+  --muted: #F1F5F9;
+  /* Muted Background - Light blue tint */
+  --muted-foreground: #64748B;
 
-  --accent: #FF6700;
-  /* Accent Color (10%) - Vibrant Orange for CTAs */
+  --accent: #F59E0B;
+  /* Accent Color - Warm Amber, energetic and attention-grabbing */
   --accent-foreground: #FFFFFF;
 
-  --destructive: #DC2626;
+  --destructive: #EF4444;
+  /* Destructive - Clear red, but not harsh */
   --destructive-foreground: #FFFFFF;
 
-  --border: #E0E0E0;
-  --input: #F9F9F9;
-  --ring: #005F73;
+  --border: #E2E8F0;
+  --input: #F8FAFC;
+  --ring: #3B82F6;
 
-  --radius: 0.5rem;
-  /* Professional rounded corners */
+  --radius: 0.75rem;
+  /* Slightly more rounded for friendly feel */
 }
 
 body {
@@ -88,12 +90,13 @@ body {
   border-radius: var(--radius);
   font-weight: 600;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
 }
 
 .primary-button:hover {
-  background-color: #E55A00;
+  background-color: #D97706;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 103, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
 .secondary-button {
@@ -106,15 +109,18 @@ body {
 }
 
 .secondary-button:hover {
-  background-color: #004D5F;
+  background-color: #4F46E5;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Fun gradient utilities */
+.gradient-fun {
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #F59E0B 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
 }
 
 /* Smooth transitions */

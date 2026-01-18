@@ -90,118 +90,135 @@ export default function CoursePage() {
   );
 
   return (
-    <div className="bg-background text-foreground min-h-screen selection:bg-accent selection:text-black">
+    <div className="bg-background text-foreground min-h-screen">
       <Navbar />
 
       {/* HERO SECTION */}
-      <section className="relative px-6 py-12 border-b border-[#432C7A]">
-        <div className="absolute inset-0 bg-[url('/images/pixel-map.png')] bg-cover opacity-20" />
-        <div className="absolute inset-0 bg-[#1A0B2E]/90" />
-
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-left">
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-2">
+      <section className="relative px-6 py-16 border-b border-border bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div className="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-left flex-1">
+            <div className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold text-xs tracking-wide w-fit mb-4">
+              Course Overview
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
               {course.title}
             </h1>
-            <p className="text-muted-foreground max-w-xl">
+            <p className="text-muted-foreground text-lg max-w-2xl leading-relaxed">
               {course.description}
             </p>
+            <div className="flex items-center gap-4 mt-6">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                {chapters.length} Chapters
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="w-2 h-2 rounded-full bg-accent"></span>
+                {chapters.reduce((acc, ch) => acc + (ch.lessons?.length || 0), 0)} Lessons
+              </div>
+            </div>
           </div>
-          <button className="bg-[#FFA600] text-black px-8 py-3 rounded-xl font-black uppercase tracking-wide hover:scale-105 transition-transform shadow-[4px_4px_0_#996600]">
-            Start Learning
-          </button>
+          <div className="flex-shrink-0">
+            <button className="primary-button px-8 py-4 text-lg font-semibold shadow-lg">
+              Start Learning
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* TREE & BRANCH LAYOUT */}
-      <div className="max-w-4xl mx-auto px-6 py-12 pb-32">
-        <div className="relative border-l-2 border-[#432C7A] ml-6 md:ml-10 space-y-12">
+      {/* COURSE CONTENT */}
+      <div className="max-w-5xl mx-auto px-6 py-12 pb-32">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-foreground mb-2">Course Content</h2>
+          <p className="text-muted-foreground">
+            Progress through each chapter to master the fundamentals and advanced concepts.
+          </p>
+        </div>
 
+        <div className="space-y-6">
           {chapters.map((chapter, index) => {
             const isExpanded = expandedChapters.has(chapter.id);
 
             return (
-              <div key={chapter.id} className="relative pl-8 md:pl-12">
-                {/* Dot on the main timeline */}
-                <div className="absolute -left-[9px] top-6 w-4 h-4 rounded-full bg-[#1A0B2E] border-2 border-[#7000FF]" />
-
-                {/* CHAPTER CARD */}
-                <div className="bg-[#0b1020] border border-[#2D1B4E] rounded-2xl overflow-hidden transition-all duration-300">
-
-                  {/* Header (Click to toggle) */}
-                  <button
-                    onClick={() => toggleChapter(chapter.id)}
-                    className="w-full flex items-center justify-between p-6 hover:bg-[#161e3d] transition-colors"
-                  >
-                    <div className="flex items-center gap-6">
-                      <div className="w-12 h-12 rounded-full border-2 border-white/20 flex items-center justify-center text-xl font-bold text-white bg-[#1A0B2E]">
-                        {index + 1}
-                      </div>
-                      <div className="text-left">
-                        <h2 className="text-xl font-bold text-white">{chapter.title}</h2>
-                        <p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">
-                          {chapter.lessons?.length || 0} Missions
-                        </p>
-                      </div>
+              <div key={chapter.id} className="professional-card rounded-xl overflow-hidden">
+                {/* Chapter Header */}
+                <button
+                  onClick={() => toggleChapter(chapter.id)}
+                  className="w-full flex items-center justify-between p-6 hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-lg font-bold text-primary">
+                      {index + 1}
                     </div>
-                    <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
-                      <ChevronDown className="w-6 h-6 text-white" />
+                    <div className="text-left">
+                      <h3 className="text-xl font-bold text-foreground">{chapter.title}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {chapter.lessons?.length || 0} Lessons
+                      </p>
                     </div>
-                  </button>
+                  </div>
+                  <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </button>
 
-                  {/* Body (Lessons) - Collapsible */}
-                  {isExpanded && (
-                    <div className="border-t border-[#2D1B4E] bg-[#0a0f1d] p-6 pt-2">
-                      <div className="relative space-y-1">
-                        {/* The "Branch" Line */}
-                        <div className="absolute left-[22px] top-0 bottom-6 w-0.5 bg-[#2D1B4E]" />
+                {/* Lessons */}
+                {isExpanded && (
+                  <div className="border-t border-border bg-muted/20">
+                    <div className="p-6 space-y-3">
+                      {chapter.lessons?.sort((a: any, b: any) => a.order_index - b.order_index).map((lesson: any, lIndex: number) => {
+                        const canAccess = lesson.is_free || isPro;
+                        let destination = `/lessons/${lesson.slug}`;
+                        if (!lesson.is_free && !user) destination = "/login";
+                        else if (!lesson.is_free && user && !isPro) destination = "/pricing";
 
-                        {chapter.lessons?.sort((a: any, b: any) => a.order_index - b.order_index).map((lesson: any, lIndex: number) => {
-                          const canAccess = lesson.is_free || isPro;
-                          let destination = `/lessons/${lesson.slug}`;
-                          if (!lesson.is_free && !user) destination = "/login";
-                          else if (!lesson.is_free && user && !isPro) destination = "/pricing";
-
-                          return (
-                            <div key={lesson.id} className="relative flex items-center justify-between py-4 pl-12 pr-4 group hover:bg-[#161e3d] rounded-lg transition-colors">
-                              {/* Branch Connector */}
-                              <div className="absolute left-[22px] top-1/2 w-4 h-0.5 bg-[#2D1B4E]" />
-                              <div className="absolute left-[20px] top-1/2 -mt-[3px] w-1.5 h-1.5 rounded-full bg-[#7000FF]" />
-
-                              <div className="flex flex-col">
-                                <span className="text-sm font-bold text-white group-hover:text-[#00F0FF] transition-colors">
-                                  {lesson.title} {isPro ? '(PRO)' : ''} {!lesson.is_free ? '(PAID)' : '(FREE)'}
-                                </span>
-                                <span className="text-[10px] text-muted-foreground">
-                                  Exercise {index + 1}.{lIndex + 1}
-                                </span>
+                        return (
+                          <div key={lesson.id} className="flex items-center justify-between p-4 bg-background rounded-lg border border-border hover:border-primary/30 transition-all">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center text-xs font-bold text-muted-foreground">
+                                {lIndex + 1}
                               </div>
-
-
-                              {lesson.is_free || canAccess ? (
-                                <Link href={destination}>
-                                  <button className="bg-[#00F0FF] hover:bg-[#00D0DF] text-black font-black text-xs px-6 py-2 rounded shadow-[0_3px_0_#0088AA] active:translate-y-[2px] active:shadow-none transition-all uppercase tracking-wide">
-                                    Start
-                                  </button>
-                                </Link>
-                              ) : (
-                                <Link href={destination}>
-                                  <button className="bg-[#1A0B2E] border border-white/10 text-white/50 hover:text-white hover:border-white/30 font-bold text-xs px-6 py-2 rounded cursor-pointer transition-colors flex items-center justify-center gap-2">
-                                    <span>🔒</span> Locked
-                                  </button>
-                                </Link>
-                              )}
+                              <div>
+                                <h4 className="font-semibold text-foreground text-sm">
+                                  {lesson.title}
+                                  {isPro && !lesson.is_free && (
+                                    <span className="ml-2 px-2 py-1 bg-accent text-accent-foreground text-xs rounded-full font-medium">PRO</span>
+                                  )}
+                                  {!lesson.is_free && !isPro && (
+                                    <span className="ml-2 px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full font-medium">PREMIUM</span>
+                                  )}
+                                  {lesson.is_free && (
+                                    <span className="ml-2 px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">FREE</span>
+                                  )}
+                                </h4>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  Exercise {index + 1}.{lIndex + 1}
+                                </p>
+                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
+
+                            {lesson.is_free || canAccess ? (
+                              <Link href={destination}>
+                                <button className="primary-button text-sm px-4 py-2 font-medium">
+                                  Start
+                                </button>
+                              </Link>
+                            ) : (
+                              <Link href={destination}>
+                                <button className="secondary-button text-sm px-4 py-2 font-medium flex items-center gap-2">
+                                  <span>🔒</span>
+                                  Locked
+                                </button>
+                              </Link>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}
-
         </div>
       </div>
     </div>
