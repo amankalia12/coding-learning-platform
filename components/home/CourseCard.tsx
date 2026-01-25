@@ -1,5 +1,4 @@
 import Link from 'next/link';
-// Assuming type might be needed, or define locally if preferred. 
 
 // Defining type locally to match previous file state if import is missing
 type Course = {
@@ -10,14 +9,14 @@ type Course = {
   language: string;
 };
 
-// Fun vibrant gradients
+// Professional gradients
 const gradients = [
-  'from-blue-500 via-purple-500 to-pink-500',
-  'from-amber-500 via-orange-500 to-red-500',
-  'from-green-500 via-teal-500 to-blue-500',
-  'from-purple-500 via-pink-500 to-rose-500',
-  'from-yellow-400 via-orange-500 to-red-500',
-  'from-cyan-500 via-blue-500 to-indigo-500',
+  'from-blue-500 to-indigo-600',
+  'from-purple-500 to-pink-600',
+  'from-green-500 to-teal-600',
+  'from-orange-500 to-red-600',
+  'from-cyan-500 to-blue-600',
+  'from-indigo-500 to-purple-600',
 ];
 
 export default function CourseCard({ course, index }: { course: Course; index: number }) {
@@ -25,32 +24,31 @@ export default function CourseCard({ course, index }: { course: Course; index: n
 
   return (
     <Link href={`/courses/${course.slug}`} className="group cursor-pointer">
-      <div className="relative aspect-video rounded-xl overflow-hidden border border-border bg-card shadow-lg transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
-
-        {/* Dynamic Gradient Background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 group-hover:opacity-30 transition-opacity`} />
-
+      <div className="relative aspect-video rounded-2xl overflow-hidden border border-border bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-2">
         {/* Content Container */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between">
-
           {/* Top Badge */}
-          <div className="flex justify-end">
-            <div className="w-12 h-12 rounded-xl bg-white/90 backdrop-blur-sm border border-white/20 flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 transition-all shadow-lg">
-              {index % 2 === 0 ? '🚀' : '💻'}
+          <div className="flex justify-between items-start">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-lg group-hover:bg-primary/20 group-hover:scale-110 transition-all">
+              {index % 4 === 0 ? '🚀' : index % 4 === 1 ? '💻' : index % 4 === 2 ? '📚' : '⚡'}
+            </div>
+            <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
+              {index + 1}
             </div>
           </div>
 
-          <div className="relative z-10">
-            <span className="inline-block px-3 py-1 mb-3 text-xs font-bold text-white bg-gradient-to-r from-primary to-secondary rounded-md shadow-lg">
-              Course {index + 1}
-            </span>
-            <h3 className="text-xl font-bold text-white leading-tight group-hover:text-yellow-300 transition-colors mb-2 drop-shadow-lg">
+          <div className="flex-1 flex flex-col justify-end">
+            <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors mb-2">
               {course.title || course.description}
             </h3>
             {course.language && (
-              <p className="text-sm text-white/90 drop-shadow">{course.language}</p>
+              <p className="text-sm text-muted-foreground mb-3">{course.language}</p>
             )}
-            <div className="h-1 w-16 bg-gradient-to-r from-accent to-yellow-400 mt-4 rounded-full group-hover:w-full transition-all duration-500 shadow-lg" />
+            
+            {/* Progress Bar */}
+            <div className="w-full h-1 bg-border rounded-full overflow-hidden">
+              <div className="h-full w-16 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500 group-hover:w-full"></div>
+            </div>
           </div>
         </div>
       </div>

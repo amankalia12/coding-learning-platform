@@ -34,10 +34,25 @@ export default async function HomePage() {
       <Navbar />
       <main className="max-w-7xl mx-auto">
         <Hero firstCourse={firstCourse} />
+        
+        {/* Course Cards - Right after banner */}
+        {courses && courses.length > 0 && (
+          <section className="py-8 px-6">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Explore Our <span className="text-primary">Popular Courses</span>
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Start your learning journey with our most popular courses
+              </p>
+            </div>
+            <CourseGrid courses={courses} />
+          </section>
+        )}
+
         <Stats />
         <Features />
         <LearningPaths />
-        <CourseGrid courses={courses || []} />
         <Testimonials />
         <CTA />
       </main>
